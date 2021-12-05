@@ -24,13 +24,15 @@ function init() {
     scene = new THREE.Scene();
 
     // camera
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(0, 200, 800);
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+    camera.rotation.order = 'YXZ';
+    camera.rotation.set(-20*3.14/180,-3.14/2,0);
+    camera.position.set(-430, 250, 120);
 
     // (camera) controls
     // mouse controls: left button to rotate, 
     //    mouse wheel to zoom, right button to pan
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    //controls = new THREE.OrbitControls(camera, renderer.domElement);
 
     // light    
     var light = new THREE.PointLight(0xffffff);
@@ -38,10 +40,23 @@ function init() {
     scene.add(light);
 
     loadCinema();
-    streamVideo();
+
+    document.addEventListener( 'mousedown', () => {
+        document.body.requestPointerLock();
+        //mouseTime = performance.now();
+    });
+
+    document.body.addEventListener( 'mousemove', ( event ) => {
+        if ( document.pointerLockElement === document.body ) {
+            camera.rotation.y -= event.movementX / 5000;
+            camera.rotation.x -= event.movementY / 5000;
+        }
+    } );
 
     // events
     window.addEventListener('resize', onWindowResize, false);
+
+    streamVideo();
 
 }
 
@@ -80,13 +95,13 @@ function streamVideo() {
 	video = document.createElement( 'video' );
 	// video.id = 'video';
 	// video.type = ' video/ogg; codecs="theora, vorbis" ';
-	video.src = "assets/introducing_meta.mp4";
+	video.src = "assets/return_of_the_doge.mp4";
 	video.load(); // must call after setting/changing source
 	video.play();
 	
 	videoImage = document.createElement( 'canvas' );
-	videoImage.width = 480;
-	videoImage.height = 204;
+	videoImage.width = 0.25*920;
+	videoImage.height = 0.5*260;
 
 	videoImageContext = videoImage.getContext( '2d' );
 	// background color if no video present
@@ -103,12 +118,10 @@ function streamVideo() {
 	// 		movie image will be scaled to fit these dimensions.
 	var movieGeometry = new THREE.PlaneGeometry( 920, 260, 4, 4 );
 	var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
-	movieScreen.position.set(596,216,0);
+	movieScreen.position.set(594,216,0);
     movieScreen.rotation.set(0, -3.14/2, 0)
 	scene.add(movieScreen);
 	
-	camera.position.set(0,150,300);
-	camera.lookAt(movieScreen.position);
 }
 
 function onWindowResize(event) {
@@ -118,7 +131,7 @@ function onWindowResize(event) {
 }
 
 function animate() {
-    controls.update();
+    //controls.update();
 
     if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
 	{
@@ -126,6 +139,7 @@ function animate() {
 		if ( videoTexture ) 
 			videoTexture.needsUpdate = true;
 	}
+    
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
