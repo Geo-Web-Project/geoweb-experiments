@@ -6,8 +6,8 @@ var container, renderer, scene, camera, controls;
 var video, videoImage, videoImageContext, videoTexture;
 var hasVideoLoaded = false
 
-init();
-animate();
+init(); //Set Up Scene
+animate();  //Set Up Renderer
 
 function init() {
 
@@ -70,8 +70,7 @@ function loadCinema() {
 
     // Load a glTF resource
     loader.load(
-        // resource URL
-        'assets/cinema.glb',
+        'assets/cinema.glb',    // resource URL
         // called when the resource is loaded
         function ( gltf ) {
             var cinema = gltf.scene;
@@ -109,10 +108,10 @@ function streamVideo() {
 	videoImage = document.createElement( 'canvas' );
 	videoImage.width = 0.25*920;
 	videoImage.height = 0.5*260;
+    video.muted = true
 
 	videoImageContext = videoImage.getContext( '2d' );
-	// background color if no video present
-	videoImageContext.fillStyle = '#000000';
+	videoImageContext.fillStyle = '#000000';    // background color if no video present
 	videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
 
 	videoTexture = new THREE.Texture( videoImage );
@@ -129,6 +128,7 @@ function streamVideo() {
     movieScreen.rotation.set(0, -3.14/2, 0)
 	scene.add(movieScreen);
 
+    video.muted = false;
     video.play();
 	
     hasVideoLoaded = true
