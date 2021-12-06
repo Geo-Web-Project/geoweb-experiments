@@ -4,6 +4,7 @@ var container, renderer, scene, camera, controls;
 
 // custom global variables
 var video, videoImage, videoImageContext, videoTexture;
+var hasVideoLoaded = false
 
 init();
 animate();
@@ -56,8 +57,6 @@ function init() {
     // events
     window.addEventListener('resize', onWindowResize, false);
 
-    streamVideo();
-
 }
 
 function loadCinema() {
@@ -78,6 +77,8 @@ function loadCinema() {
             var cinema = gltf.scene;
             cinema.scale.set(10, 10, 10)
             scene.add( cinema );
+
+            streamVideo();
         },
         // called while loading is progressing
         function ( xhr ) {
@@ -95,9 +96,15 @@ function streamVideo() {
 	video = document.createElement( 'video' );
 	// video.id = 'video';
 	// video.type = ' video/ogg; codecs="theora, vorbis" ';
-	video.src = "assets/return_of_the_doge.mp4";
+
+    //https://withered-art-6159.on.fleek.co/01-video-streaming/assets/return_of_the_doge.mp4
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if(urlParams === undefined) return
+
+	video.src = urlParams.get("video_src")    //"assets/return_of_the_doge.mp4";
+    video.crossOrigin = "anonymous";
 	video.load(); // must call after setting/changing source
-	video.play();
 	
 	videoImage = document.createElement( 'canvas' );
 	videoImage.width = 0.25*920;
@@ -121,7 +128,10 @@ function streamVideo() {
 	movieScreen.position.set(594,216,0);
     movieScreen.rotation.set(0, -3.14/2, 0)
 	scene.add(movieScreen);
+
+    video.play();
 	
+    hasVideoLoaded = true
 }
 
 function onWindowResize(event) {
@@ -132,13 +142,13 @@ function onWindowResize(event) {
 
 function animate() {
     //controls.update();
-
-    if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
-	{
-		videoImageContext.drawImage( video, 0, 0 );
-		if ( videoTexture ) 
-			videoTexture.needsUpdate = true;
-	}
+    if(hasVideoLoaded) {
+        if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
+        {
+            videoImageContext.drawImage( video, 0, 0 );
+            if ( videoTexture ) videoTexture.needsUpdate = true;
+        }
+    }
     
 
     renderer.render(scene, camera);
