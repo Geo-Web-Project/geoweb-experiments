@@ -45,6 +45,11 @@ function init() {
     document.addEventListener( 'mousedown', () => {
         document.body.requestPointerLock();
         //mouseTime = performance.now();
+
+        if(!hasVideoLoaded) {
+            video.play();
+            hasVideoLoaded = true
+        }
     });
 
     document.body.addEventListener( 'mousemove', ( event ) => {
@@ -129,9 +134,6 @@ function streamVideo() {
 	scene.add(movieScreen);
 
     video.muted = false;
-    video.play();
-	
-    hasVideoLoaded = true
 }
 
 function onWindowResize(event) {
