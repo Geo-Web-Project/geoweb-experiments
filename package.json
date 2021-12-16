@@ -1,0 +1,23 @@
+{
+  "name": "geoweb-experiments",
+  "version": "1.0.0",
+  "description": "xr legos and sandbox experiments",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Geo-Web-Project/geoweb-experiments.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Geo-Web-Project/geoweb-experiments/issues"
+  },
+  "homepage": "https://github.com/Geo-Web-Project/geoweb-experiments#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-server": "^14.0.0"
+  }
+}

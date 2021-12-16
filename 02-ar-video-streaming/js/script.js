@@ -1,5 +1,5 @@
 import * as THREE from '../lib/three.module.js';
-import { ARButton } from '../lib/ARButton';
+import { ARButton } from '../lib/ARButton.js';
 
 let container;
 let camera, scene, renderer;
