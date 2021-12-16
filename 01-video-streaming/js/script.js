@@ -101,7 +101,7 @@ function streamVideo() {
 	// video.id = 'video';
 	// video.type = ' video/ogg; codecs="theora, vorbis" ';
 
-    //https://withered-art-6159.on.fleek.co/01-video-streaming/assets/return_of_the_doge.mp4
+    //https://geoweb-experiments.on.fleek.co/01-video-streaming/assets/return_of_the_doge.mp4
     const urlParams = new URLSearchParams(window.location.search);
     
     if(urlParams === undefined) return

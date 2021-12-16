@@ -1,5 +1,6 @@
 import * as THREE from '../lib/three.module.js';
 import { ARButton } from '../lib/ARButton.js';
+import { GLTFLoader } from '../lib/GLTFLoader.js'
 
 let container;
 let camera, scene, renderer;
@@ -10,8 +11,47 @@ let reticle;
 let hitTestSource = null;
 let hitTestSourceRequested = false;
 
+let glb_model = null;
+let hasModelLoaded = false;
+
 init();
 animate();
+
+function loadModel() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if(urlParams === undefined) return
+
+	let glb_src = urlParams.get("glb_src")    //"assets/return_of_the_doge.mp4";
+
+    // Instantiate a loader
+    const loader = new GLTFLoader();
+
+    // Optional: Provide a DRACOLoader instance to decode compressed mesh data
+    // const dracoLoader = new DRACOLoader();
+    // dracoLoader.setDecoderPath( '/examples/js/libs/draco/' );
+    // loader.setDRACOLoader( dracoLoader );
+
+    // Load a glTF resource
+    loader.load(
+        glb_src,
+        //"https://gateway.pinata.cloud/ipfs/Qmbb585ZZKunL4vAQLyCHCgpsweNCGPuUuAssBw5oCHiyL",
+        
+        // called when the resource is loaded
+        function ( gltf ) {
+            glb_model = gltf.scene;
+            hasModelLoaded = true;
+        },
+        // called while loading is progressing
+        function ( xhr ) {
+            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+        },
+        // called when loading has errors
+        function ( error ) {
+            console.log( 'An error happened' );
+        }
+    );
+}
 
 function init() {
 
@@ -41,17 +81,18 @@ function init() {
     //
 
     const geometry = new THREE.CylinderGeometry( 0.1, 0.1, 0.2, 32 ).translate( 0, 0.1, 0 );
+    loadModel();
 
     function onSelect() {
 
         if ( reticle.visible ) {
-
-            const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
-            const mesh = new THREE.Mesh( geometry, material );
-            mesh.position.setFromMatrixPosition( reticle.matrix );
-            mesh.scale.y = Math.random() * 2 + 1;
-            scene.add( mesh );
-
+            let model;
+            if(hasModelLoaded)
+                model = glb_model.clone();
+                model.position.setFromMatrixPosition( reticle.matrix );
+                model.scale.set(0.001, 0.001, 0.001);
+                scene.add(model);
+                console.log(scene);
         }
 
     }
