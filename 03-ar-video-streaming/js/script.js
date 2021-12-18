@@ -22,7 +22,7 @@ function loadModel() {
     
     if(urlParams === undefined) return
 
-	let video_src = urlParams.get("video_src")    //"assets/return_of_the_doge.mp4";
+	let glb_src = urlParams.get("glb_src")    //"assets/return_of_the_doge.mp4";
 
     // Instantiate a loader
     const loader = new GLTFLoader();
@@ -34,8 +34,9 @@ function loadModel() {
 
     // Load a glTF resource
     loader.load(
-        "https://gateway.pinata.cloud/ipfs/Qmbb585ZZKunL4vAQLyCHCgpsweNCGPuUuAssBw5oCHiyL",
-
+        glb_src,
+        //"https://gateway.pinata.cloud/ipfs/Qmbb585ZZKunL4vAQLyCHCgpsweNCGPuUuAssBw5oCHiyL",
+        
         // called when the resource is loaded
         function ( gltf ) {
             glb_model = gltf.scene;
