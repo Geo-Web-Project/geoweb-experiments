@@ -1,25 +1,5 @@
 
-function loadPlaces(position) {
-    const params = {
-        radius: 300,    // search places not farther than this value (in meters)
-        clientId: '<YOUR-CLIENT-ID>',
-        clientSecret: 'YOUR-CLIENT-SECRET',
-        version: '20300101',    // foursquare versioning, required but unuseful for this demo
-    };
-
-
-    // Foursquare API (limit param: number of maximum places to fetch)
-    const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
-        &ll=${position.latitude},${position.longitude}
-        &radius=${params.radius}
-        &client_id=${params.clientId}
-        &client_secret=${params.clientSecret}
-        &limit=30 
-        &v=${params.version}`;
-
-    
-};
-
+var test_model_src = 'https://gateway.pinata.cloud/ipfs/QmTxmmG33T1mkEucgzDNQLDEQUxDsymusyRv7UiqESnq9F'
 
 window.onload = () => {
     const scene = document.querySelector('a-scene');
@@ -37,12 +17,12 @@ window.onload = () => {
 
         // add place name
         const model = document.createElement('a-entity');
-        model.setAttribute('gltf-model', './assets/hot_air_balloon.glb');
+        model.setAttribute('gltf-model', test_model_src); //'./assets/hot_air_balloon.glb'
         model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
         model.setAttribute('title', place.name);
         model.setAttribute('scale', '15 15 15');
         
-        placeText.addEventListener('loaded', () => {
+        model.addEventListener('loaded', () => {
             window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
         });
 
