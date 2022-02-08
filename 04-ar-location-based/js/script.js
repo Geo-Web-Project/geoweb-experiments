@@ -17,6 +17,13 @@ let altitude = parseFloat(params.alt);
 
 let place = { name: params.name.toString(), location: { lng: lon, lat: lat } }
 
+console.log(glb_cid)
+console.log(scale)
+console.log(lat)
+console.log(lon)
+console.log(altitude)
+console.log(place)
+
 window.onload = () => {
     const scene = document.querySelector('a-scene');
     const dom = document.querySelector('body');
