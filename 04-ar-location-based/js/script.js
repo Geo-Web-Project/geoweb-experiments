@@ -8,6 +8,14 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 //var altitude = 100
 //{ name: "Hot Air Balloon", location: { lng: 80.072225, lat: 12.823755 } }
 
+/*
+https://192.168.1.16:8080/04-ar-location-based/aframe-dynamic.html?lat=12.823755&lon=80.072225&alt=100&scale=1&name=Hot%20Air%20Balloon&glb_cid=https://gateway.pinata.cloud/ipfs/QmTxmmG33T1mkEucgzDNQLDEQUxDsymusyRv7UiqESnq9F
+
+https://bafybeihcjgdd7xp62wlfvye476onvvi2qodmek4noy3o67pnqflea2b4va.on.fleek.co/04-ar-location-based/?lat=12.823755&lon=80.072225&alt=100&scale=1&name=Hot%20Air%20Balloon&glb_cid=https://gateway.pinata.cloud/ipfs/QmTxmmG33T1mkEucgzDNQLDEQUxDsymusyRv7UiqESnq9F
+
+Tes links ^^ Avoid
+*/
+
 let glb_cid = params.glb_cid.toString();
 let scale = parseFloat(params.scale);
 
