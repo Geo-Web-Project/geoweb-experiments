@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>GeoWeb Landing Site in the Metaverse</title>
+    <!-- aframe@1.2.0 aframe-websurfaces@1.4.0 -->
+    <script src="lib/aframe.min.js"></script>
+    <script src="lib/aframe-websurfaces.umd.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!--Camera-->
+      <a-entity
+        wasd-controls="acceleration: 20;"
+        camera="active: true"
+        look-controls="pointerLockEnabled: false"
+        position="0 1.6 0"
+      >
+        <a-cursor position="0 0 -.05" scale=".04 .04 1"></a-cursor>
+      </a-entity>
+
+      <!--Environment-->
+      <a-sky color="#aab3ff"></a-sky>
+      <a-plane
+        rotation="-90 0 0"
+        width="20"
+        height="20"
+        color="#3fa890"
+      ></a-plane>
+
+      <!--Websurface-->
+      <a-entity
+        id="landing-page"
+        websurface="url:https://geoweb.land; width:4; height:2;"
+        position="2.25 1.5 -4"
+      ></a-entity>
+      <a-entity
+        websurface="url:https://geoweb.network; width:4; height:2;"
+        position="-2.25 1.5 -4"
+      ></a-entity>
+    </a-scene>
+  </body>
+</html>
